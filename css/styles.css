@@ -1,0 +1,249 @@
+/* ------------------------
+   Estilos generales
+------------------------ */
+
+/* Fondo en html y body para evitar fondo blanco en móviles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Fondo fijo en escritorio */
+  overflow-x: hidden; /* 👈 evita bordes blancos horizontales */
+  overflow-y: auto;   /* 👈 permite scroll si el contenido lo necesita */
+  font-family: sans-serif;
+  background-color: transparent; /* fallback para evitar fondo blanco */
+}
+.background-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../img/fondo-min-2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: -1; /* Detrás del contenido */
+  opacity: .9; /* Puedes cambiar esto dinámicamente */
+  pointer-events: none; /* Para que no bloquee clics */
+}
+
+
+.scroll-wrapper {
+  background: transparent; /* Que no tape el fondo */
+  min-height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior: none; /* Esto quita rebote también en escritorio */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.area-invisible-mapa {
+  position: absolute;
+  z-index: 11; /* Encima de la carta */
+  top: 80%;     /* Ajusta según tu imagen */
+  left: 50%;    /* Centrado horizontalmente */
+  width: 40%;   /* Ajusta el ancho del área */
+  height: 6%;   /* Ajusta la altura */
+  transform: translateX(-50%);
+  cursor: pointer;
+  background: transparent;
+  pointer-events: auto;
+border: 1px solid rgba(0, 0, 0, 0.08);
+background: rgba(255, 255, 255, 0.03);
+border-radius: 12px;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+transition: all 0.3s ease;
+
+
+  
+ 
+}
+.area-invisible-whatsapp {
+  position: absolute;
+  z-index: 12; /* Encima del cuadro */
+  top: 139%;    /* Ajusta según el texto en el cuadro */
+  left: 50%;
+  width: 33%;
+  height: 3%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  background: transparent;
+  pointer-events: auto;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+background: rgba(255, 255, 255, 0.03);
+border-radius: 12px;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+transition: all 0.3s ease;
+
+ 
+
+  /* TEMPORAL: usa esto para ver el área mientras ajustas */
+  /* border: 2px dashed green; */
+}
+
+
+
+
+/* ----------------------------------
+   Contenedor del sobre (responsivo)
+---------------------------------- */
+.envelope-container {
+  position: relative;
+  width: 90vw;
+  max-width: 600px;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  margin: -20vh auto 10vh auto; /* 👈 Centrado horizontal con espacio arriba y abajo */
+}
+
+/* Todas las imágenes dentro del sobre */
+.envelope-container img {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left: 0;
+  top: 0;
+  object-fit: contain;
+  display: block;
+}
+
+/* ----------------------------------
+   Capas específicas (orden visual)
+---------------------------------- */
+
+/* 1. Sobre cerrado (base) */
+.sobre {
+  z-index: 1;
+filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.45));
+
+}
+
+/* 2. Sobre abierto vacío */
+.sobre-vacio {
+  z-index: 2;
+  filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.45));
+
+}
+
+/* 3. Cuadro pequeño (la carta antes de desplegarse) */
+.cuadro {
+  z-index: 3;
+  top: 20% !important;
+  left: 50% !important; /* 👈 centrado horizontalmente */
+  width: 35% !important;
+  transform: translate(-50%, 0) !important; /* 👈 centrado exacto */
+  transition: transform 1s ease, top 1s ease !important;
+  opacity: 0 !important;
+  border: none !important; /* 👈 limpio por defecto */
+  filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.45));
+
+}
+
+.cuadro.saliendo {
+  opacity: 1 !important;
+  top: 10% !important; /* 👈 sube un poco */
+  transform: translate(-50%, -20%) !important; /* 👈 sigue centrado, pero sube un poco */
+  transition: transform 1s ease, top 1s ease !important;
+}
+
+.cuadro.acomodado {
+  top: 100% !important;
+  transform: translate(-50%, 60%) !important; /* 👈 tu posición final */
+  border: none !important; /* 👈 opcional: quitar borde al final */
+}
+
+/* 4. Carta grande desplegable */
+.carta {
+  z-index: 4;
+  top: 18% !important;
+  left: 16% !important;
+  width: 67% !important;
+  opacity: 0;
+  transform: translateY(0) rotate(-90deg);
+  transition: transform 0s ease-in-out, opacity 0s;
+  filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.45));
+   
+}
+
+.carta.visible {
+  opacity: 1;
+  
+  
+}
+
+.carta.animada {
+  animation: salidaElegante 1.8s ease-in-out forwards;
+}
+
+.carta.final {
+  z-index: 6; /* Encima de todo si es necesario */
+}
+
+/* 5. Solapa frontal del sobre aqui cambia por un gato mas especificos */
+#solapaFrente {
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  z-index: 5;
+
+}
+
+/* ----------------------------------
+   Utilidades
+---------------------------------- */
+.oculto {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ----------------------------------
+   Animación elegante de la carta
+---------------------------------- */
+@keyframes salidaElegante {
+  0% {
+    opacity: 1;
+    transform: translateY(0%) rotate(-90deg);
+  }
+  40% {
+    transform: translateY(-100%) rotate(-90deg);
+  }
+  100% {
+    transform: translateY(10%) rotate(0deg);
+    left: 20%;
+  }
+}
+
+/* ----------------------------------
+   Media queries para pantallas pequeñas
+---------------------------------- */
+@media (max-width: 500px) {
+  .envelope-container {
+    width: 90vw;
+  }
+  
+  .cuadro {
+    width: 45%;
+  }
+}
+
+/* ----------------------------------
+   Ajustes para dispositivos móviles
+---------------------------------- */
+@media (max-width: 768px) {
+  html, body {
+    background-attachment: scroll; /* Evita problemas en móviles con fondo fijo */
+  }
+  
+  /* Si quieres quitar rebote vertical solo en móvil */
+  body {
+    overscroll-behavior: none;
+  }
+  
+
+}
