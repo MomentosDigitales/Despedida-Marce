@@ -5,55 +5,44 @@ document.addEventListener('DOMContentLoaded', function () {
   const carta = document.getElementById('carta');
   const cuadro = document.getElementById('cuadro');
 
-  let estado = 0; // 0 = cerrado, 1 = abierto con carta, 2 = carta fuera
+  // Espera 500ms para que el sobre cerrado se vea
+  setTimeout(() => {
+    // Paso 1: Abrir el sobre
+    sobreCerrado.classList.add('oculto');
+    solapaFrente.classList.remove('oculto');
+    sobreAbiertoVacio.classList.remove('oculto');
 
-  const envelopeContainer = document.querySelector('.envelope-container');
+    carta.classList.remove('oculto');
+    carta.classList.add('visible');
 
-  envelopeContainer.addEventListener('click', function () {
-    if (estado === 0) {
-      // Primer clic: abrir el sobre (mostrar solapa y carta parcialmente)
-      sobreCerrado.classList.add('oculto');
-      solapaFrente.classList.remove('oculto');
-      sobreAbiertoVacio.classList.remove('oculto');
-
-      carta.classList.remove('oculto');
-      carta.classList.add('visible');
-
-      estado = 1;
-
-    } else if (estado === 1) {
-      // Segundo clic: animar carta con salida elegante
+    // Paso 2: animar la carta
+    setTimeout(() => {
       carta.classList.add('animada');
-      carta.classList.remove('final'); // Empieza con z-index bajo
+      carta.classList.remove('final');
 
-      // A los 720ms (40% del tiempo animación) sube el z-index para quedar encima de la solapa
+      // A los 720ms (40% animación), subir el z-index
       setTimeout(() => {
         carta.classList.add('final');
       }, 720);
 
-      // Al terminar la animación (1800ms), continuar con la siguiente fase
+      // A los 1800ms (cuando termina la animación), continuar con el cuadro
       setTimeout(() => {
-        solapaFrente.classList.add('oculto'); // Ocultar solapa
+        solapaFrente.classList.add('oculto');
 
         cuadro.classList.remove('oculto');
         cuadro.classList.add('saliendo');
 
-        // Después de salir, acomodar el cuadro
+        // Después de salir, acomodar el cuadro y mostrar enlaces
         setTimeout(() => {
           cuadro.classList.add('acomodado');
-          // 👉 Mostrar área invisible sobre la carta
-  document.getElementById('areaMapa').classList.remove('oculto');
-  document.getElementById('areaWhatsapp').classList.remove('oculto');
-  document.getElementById('iconoUbicacion').classList.remove('oculto');
-  document.getElementById('iconoWhatsapp').classList.remove('oculto');
 
-
+          document.getElementById('areaMapa').classList.remove('oculto');
+          document.getElementById('areaWhatsapp').classList.remove('oculto');
+          document.getElementById('iconoUbicacion')?.classList.remove('oculto');
+          document.getElementById('iconoWhatsapp')?.classList.remove('oculto');
 
         }, 1000);
-        
-
-        estado = 2;
       }, 1800);
-    }
-  });
+    }, 500); // Delay entre mostrar carta y animarla
+  }, 500); // ⏳ Este delay hace que se vea el sobre cerrado antes de iniciar
 });
