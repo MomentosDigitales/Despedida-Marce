@@ -30,7 +30,7 @@ html, body {
   z-index: -1; /* Detrás del contenido */
   opacity: .9; /* Puedes cambiar esto dinámicamente */
   pointer-events: none; /* Para que no bloquee clics */
-  transition: background-image 0.6s ease-in-out;
+  transition: background-image 1.s ease-in-out;
   filter: blur(10px)
 }
 .background-layer.loaded {
