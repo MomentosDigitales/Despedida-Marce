@@ -1,11 +1,19 @@
 window.onload = function () {
+  // Cambio del fondo borroso al de alta calidad
+  const bgLayer = document.querySelector('.background-layer');
+  const highResImage = new Image();
+  highResImage.src = 'img/fondo-min-2.png';
+  highResImage.onload = function () {
+    bgLayer.classList.add('loaded');
+  };
+
+  // Animación del sobre y la carta
   const sobreCerrado = document.getElementById('sobreCerrado');
   const solapaFrente = document.getElementById('solapaFrente');
   const sobreAbiertoVacio = document.getElementById('sobreAbiertoVacio');
   const carta = document.getElementById('carta');
   const cuadro = document.getElementById('cuadro');
 
-  // Espera 500ms para que el sobre cerrado se vea
   setTimeout(() => {
     sobreCerrado.classList.add('oculto');
     solapaFrente.classList.remove('oculto');
@@ -35,7 +43,6 @@ window.onload = function () {
           document.getElementById('areaWhatsapp').classList.remove('oculto');
           document.getElementById('iconoUbicacion')?.classList.remove('oculto');
           document.getElementById('iconoWhatsapp')?.classList.remove('oculto');
-
         }, 1000);
       }, 1800);
     }, 500);
